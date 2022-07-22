@@ -1,7 +1,9 @@
 import logging as log
 import argparse
-from flask_migrate import init, migrate, upgrade, Migrate
+from time import time
 
+from flask_migrate import init, migrate, upgrade, Migrate
+from flask import g
 from app.controller.book_genre_association import book_genre_association_namespace
 from app.controller.books import book_namespace
 from app.controller.genre import genre_namespace
@@ -34,6 +36,22 @@ class Manger:
         self.app.config["COMPRESS_ALGORITHM"] = "gzip"
         db.init_app(self.app)
 
+    @app.teardown_request
+    def teardown_request(self):
+        print(f"time taken to process request in ms: {(time()- g.time)*1000}")
+
+    @staticmethod
+    @app.before_request
+    def before_request():
+        g.time = time()
+        print("before request called")
+
+    @staticmethod
+    @app.after_request
+    def after_request(response):
+        print("after request called")
+        return response
+
     def add_namespace(self):
         self.api.add_namespace(ns=book_namespace)
         self.api.add_namespace(ns=genre_namespace)
@@ -43,7 +61,6 @@ class Manger:
         self.app.run(host="127.0.0.1", port=8080)
 
     def list_routes(self):
-        links = []
         for rule in self.app.url_map.iter_rules():
             print(rule)
 

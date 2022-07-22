@@ -27,9 +27,29 @@
 		{
 			"name": "AddBook",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": null
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"book_name\": \"Jonathan Livingston Seagull\",\n    \"author_name\":\t\"Richard Bach\",\n    \"book_description\":\t\"A fable in novella form about a seagull who is trying to learn about life and flight, and a homily about self-perfection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/book/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						"add"
+					]
+				}
 			},
 			"response": []
 		},
@@ -67,16 +87,47 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": null
+				"url": {
+					"raw": "http://localhost:8080/genre/fetch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"genre",
+						"fetch"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "BookFetchByString",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": null
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"string\": \"ear\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/book/fetch_by_string",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						"fetch_by_string"
+					]
+				}
 			},
 			"response": []
 		},
@@ -87,7 +138,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"genre_name\": \"Fiction\",\n    \"books\": [2, 4, 5]\n}",
+					"raw": "{\n    \"genre_name\": \"Fiction\",\n    \"books\": [1, 2]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,14 +146,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/book/add_book_to_genre",
+					"raw": "localhost:8080/book_genre_association/add",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"book",
-						"add_book_to_genre"
+						"book_genre_association",
+						"add"
 					]
 				}
 			},
@@ -113,15 +164,54 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genre_name\": \"Fiction\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/test",
+					"raw": "http://localhost:8080/book_genre_association/fetch",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"test"
+						"book_genre_association",
+						"fetch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FetchBookBetweenID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"to\": 3,\n    \"from\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/book/fetch_by_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						"fetch_by_id"
 					]
 				}
 			},

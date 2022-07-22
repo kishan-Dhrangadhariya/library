@@ -1,4 +1,3 @@
-import sys
 from abc import abstractmethod
 from datetime import datetime
 
@@ -65,6 +64,6 @@ class Base(db.Model):
     def fetch_all(self):
         response_list = db.session.query(self.__class__).all()
         dict_response = []
-        for object in response_list:
-            dict_response.append(object.to_dict())
+        for object_ in response_list:
+            dict_response.append(object_.to_dict())
         return dict_response

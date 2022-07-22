@@ -25,3 +25,10 @@ def add_book(kwargs):
     except Exception as e:
         return response_dict(message=str(e), status=500)
 
+
+def fetch_book_by_id(kwargs):
+    try:
+        data = Books().book_between_id(kwargs)
+        return response_dict(data=data)
+    except Exception as e:
+        return response_dict(message=str(e), status=500)

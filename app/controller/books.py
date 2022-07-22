@@ -2,7 +2,8 @@ from flask_restx import Namespace, Resource, fields
 from app.service.book import (
     fetch_all_books,
     fetch_book_by_string,
-    add_book
+    add_book,
+    fetch_book_by_id
 )
 from app.utils.helper_utils import parameter_extractor
 
@@ -21,6 +22,21 @@ fetch_book_model = book_namespace.model(
         "string": fields.String(required=True)
     }
 )
+
+fetch_book_by_id_model = book_namespace.model(
+    "FetchBookByID", {
+        "to": fields.Integer(required=True),
+        "from": fields.Integer(required=True)
+    }
+)
+
+
+@book_namespace.route("/fetch_by_id")
+class FetchBookByID(Resource):
+    @book_namespace.expect(fetch_book_by_id_model, validate=False)
+    @parameter_extractor(fetch_book_by_id_model)
+    def post(self, **kwargs):
+        return fetch_book_by_id(kwargs)
 
 
 @book_namespace.route("/fetch")

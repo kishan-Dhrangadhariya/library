@@ -1,6 +1,6 @@
 from app.models.base import Base
 from app import db
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, and_
 
 
 class Books(Base):
@@ -49,7 +49,17 @@ class Books(Base):
             dict_response.append(object_.to_dict())
         return dict_response
 
-
-
-
+    def book_between_id(self, kwargs):
+        to_ = kwargs.get('to')
+        from_ = kwargs.get('from')
+        response_list = Books.query.filter(
+            and_(
+                Books.id >= from_,
+                Books.id <= to_,
+            )
+        ).all()
+        dict_response = []
+        for object_ in response_list:
+            dict_response.append(object_.to_dict())
+        return dict_response
 
